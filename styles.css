@@ -1,0 +1,82 @@
+body{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 10%;
+}
+.menu{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    justify-content: space-around;
+    background-color: green;
+}
+#iqbooster{
+    color: red;
+    text-align: center;
+    background-color: yellow;
+    margin: 0px;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 35px;
+}
+a{
+    text-decoration: none;
+    color: white;
+}
+.myInput{
+    font-size: 2em;
+    border: 1px solid black;
+    letter-spacing: 0.5;
+    text-align: center;
+}
+.gameArea{
+    margin: auto;
+    text-align: center;
+}
+.alert-primary{
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0px;
+    margin-bottom: 10px;
+}
+.backgroundimage{
+    height: 500px;
+    width: auto;
+    background-image: url("3.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+.tag{
+    color: white;
+    font-size: 30px;
+    position: relative;
+    bottom: 300px;
+    font-weight: bold;
+    overflow: hidden;
+}
+footer {
+    background-color: #222;
+    color: #fff;
+    font-size: 14px;
+    bottom: 0;
+    position: fixed;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: 999;
+}
+footer p {
+    margin: 10px 0;
+}
+footer i {
+    color: red;
+}
+footer a {
+    color: #3c97bf;
+    text-decoration: none;
+}
+button{
+    margin: auto;
+    text-align: center;
+}
