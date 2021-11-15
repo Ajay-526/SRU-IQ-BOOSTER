@@ -1,12 +1,32 @@
 const gameArea = document.querySelector('.gameArea');
-///game start variables
-
-const myWords=["hi","cat","dog","cow","tiger","lion","bird"];//min two character
-const game={sel:'',scramble:'',score:0,incorrect:0,wordsleft:0,played:myWords.length};
 const btn=document.createElement('button');
 const output=document.createElement('div');
 const inWord=document.createElement('input');
 const scoreBoard=document.createElement('div');
+const selWordList=document.createElement('div');
+
+const url='https://docs.google.com/spreadsheets/d/';
+const ssid='1S8gVKhwwZKo12T8LCpkQJaS32-zeO5TUHDBzsyktFRE';
+const q1='/gviz/tq?';
+const q2='tqx=out:json';
+let url1=`${url}${ssid}${q1}&${q2}`;
+const myWords=["hi","tiger","lion","bird"];//min two character
+fetch(url1).then(res=>res.text()).then(data=>{
+    const json=JSON.parse(data.substr(47).slice(0,-2))
+    console.log(json.table);
+    json.table.rows.forEach(element => {
+        element.c.forEach((cell)=>{
+            myWords.push(`${cell.v}`);
+        })
+    });
+    btn.style.display='block';
+    output.textContent="you may start the game now";
+    selWordList.style.display='block';
+}) 
+console.log(myWords);
+
+///game start variables
+const game={sel:'',scramble:'',score:0,incorrect:0,wordsleft:0,played:myWords.length};
 
 
 scoreBoard.style.color='white';
@@ -14,7 +34,7 @@ scoreBoard.style.background="black";
 scoreBoard.style.padding="10px";
 scoreBoard.style.fontSize="2em";
 inWord.setAttribute('type','text');
-output.textContent="click the button";
+output.textContent="Words are Loading.......";
 output.style.textAlign='center';
 output.style.fontSize='1.2em';
 inWord.classList.add('myInput');
@@ -25,11 +45,13 @@ gameArea.append(output);
 gameArea.append(inWord);
 gameArea.prepend(scoreBoard);
 gameArea.append(btn);
+gameArea.append(selWordList);
 
 scoreBoard.style.display='none';
 inWord.style.display='none';
+btn.style.display='none';
+selWordList.style.display='none';
 ///event listerners
-
 btn.addEventListener('click',(e)=>{
     if(myWords.length<=0){
         scoreBoard.textContent='';
