@@ -80,3 +80,7 @@ button{
     margin: auto;
     text-align: center;
 }
+.alert-success{
+    font-size: 1.5em;
+    text-align: center;
+}

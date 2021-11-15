@@ -16,7 +16,7 @@ scoreBoard.style.fontSize="2em";
 inWord.setAttribute('type','text');
 output.textContent="click the button";
 output.style.textAlign='center';
-output.style.letterSpacing='0.5em';
+output.style.fontSize='1.2em';
 inWord.classList.add('myInput');
 btn.textContent="START GAME";
 btn.classList.add('btn','btn-primary');
@@ -46,7 +46,7 @@ btn.addEventListener('click',(e)=>{
     inWord.value="";
     inWord.style.borderWidth='1px';
     inWord.style.borderColor="#eee";
-    
+    inWord.style.letterSpacing="0.5em";
     scoreBoard.style.display='block';
     scoreBoard.textContent="Score : 0";
     inWord.style.display='inline';
