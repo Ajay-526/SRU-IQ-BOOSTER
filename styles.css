@@ -84,3 +84,24 @@ button{
     font-size: 1.5em;
     text-align: center;
 }
+#choice{
+    background-color: blue;
+    color: white;
+    margin: auto;
+    text-align: center;
+    font-size: 1.2em;
+}
+.choose{
+    background-color: darkgrey;
+    font-size: 1.2em;
+    padding: 5px;
+    color: white;
+    margin: auto;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.btn-secondary{
+    background-color: red;
+    color: white;
+    margin-top: 20px;
+}

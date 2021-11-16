@@ -3,38 +3,43 @@ const btn=document.createElement('button');
 const output=document.createElement('div');
 const inWord=document.createElement('input');
 const scoreBoard=document.createElement('div');
-const selWordList=document.createElement('div');
+const reset=document.createElement('button');
+
 
 const url='https://docs.google.com/spreadsheets/d/';
 const ssid='1S8gVKhwwZKo12T8LCpkQJaS32-zeO5TUHDBzsyktFRE';
 const q1='/gviz/tq?';
 const q2='tqx=out:json';
 let url1=`${url}${ssid}${q1}&${q2}`;
-const myWords=["hi","tiger","lion","bird"];//min two character
-fetch(url1).then(res=>res.text()).then(data=>{
-    const json=JSON.parse(data.substr(47).slice(0,-2))
-    console.log(json.table);
-    json.table.rows.forEach(element => {
-        element.c.forEach((cell)=>{
-            myWords.push(`${cell.v}`);
-        })
-    });
-    btn.style.display='block';
-    output.textContent="you may start the game now";
-    selWordList.style.display='block';
-}) 
-console.log(myWords);
+const myWords=[];//min two character
+
+
 
 ///game start variables
-const game={sel:'',scramble:'',score:0,incorrect:0,wordsleft:0,played:myWords.length};
+const game={sel:'',scramble:'',score:0,incorrect:0,wordsleft:0,played:30};
+
+reset.textContent="RESET";
+reset.classList.add('btn-secondary');
+reset.style.marginTop='18px';
 
 
+reset.addEventListener('click',(e)=>{
+    location.reload();
+})
+
+let selectedValue=-1;
+function change(){
+    var selectBox = document.getElementById("choice");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;   
+    bring(selectedValue,selectBox);
+}
+//alert(`${c.id}`);
 scoreBoard.style.color='white';
 scoreBoard.style.background="black";
 scoreBoard.style.padding="10px";
 scoreBoard.style.fontSize="2em";
 inWord.setAttribute('type','text');
-output.textContent="Words are Loading.......";
+output.textContent="Your Game is Loading.......";
 output.style.textAlign='center';
 output.style.fontSize='1.2em';
 inWord.classList.add('myInput');
@@ -44,23 +49,55 @@ btn.classList.add('btn','btn-primary');
 gameArea.append(output);
 gameArea.append(inWord);
 gameArea.prepend(scoreBoard);
+//gameArea.append(choose);
 gameArea.append(btn);
-gameArea.append(selWordList);
+gameArea.append(reset);
 
+function bring(selectedValue,selectBox)
+{
+    if(selectedValue==0)
+        alert('This level provides common english words which are used in our daily. You need to arrange them correctly');
+    else if(selectedValue==1)
+        alert("This level is children based you will be getting fruit names jumbled up. Your task is to rearrange them correctly");
+    else if(selectedValue==2)
+        alert("This level is a medium level, Here you will be provided a list of country names jumbled up. Your task is to rearrange them correctly");
+    fetch(url1).then(res=>res.text()).then(data=>{
+        const json=JSON.parse(data.substr(47).slice(0,-2))
+        console.log(json.table);
+        json.table.rows.forEach((element,index) => {
+            console.log(index);
+            if(selectedValue==index)
+            {
+                element.c.forEach(ele=>{
+                    myWords.push(ele.v);
+                    console.log(ele.v);
+                })
+            }
+        });
+        selectBox.style.display='none';
+        btn.style.display='block';
+        output.textContent="Click Now to start the GAME";
+    })
+}
+console.log(myWords);
 scoreBoard.style.display='none';
 inWord.style.display='none';
 btn.style.display='none';
-selWordList.style.display='none';
+reset.style.display='none';
+
+
+
 ///event listerners
 btn.addEventListener('click',(e)=>{
-    if(myWords.length<=0){
+    reset.style.display='block';
+    if(game.played<=0){
         scoreBoard.textContent='';
         btn.textContent="";
         gameArea.style.background="green";
         gameArea.style.color="white";
         gameArea.style.fontSize="2.5em";
         gameArea.innerHTML=`<div>GAME OVER</div><br>`;
-        gameArea.textContent+=` You got ${game.score} correct vs ${game.incorrect} incorrect out of ${game.played} words total`;
+        gameArea.textContent+=` You got ${game.score} correct vs ${game.incorrect} incorrect`;
         
     }else{
     }
@@ -74,7 +111,7 @@ btn.addEventListener('click',(e)=>{
     inWord.style.display='inline';
     inWord.focus();
     btn.style.display='none';
-    myWords.sort(()=>{return 0.5 - Math.random()});//randomizing the array
+    myWords.sort(()=>{return 0.7 - Math.random()});//randomizing the array
     game.sel=myWords.shift();
     game.wordsleft = myWords.length;
     addScore();
@@ -100,6 +137,7 @@ function winChecker(){
     {
         inWord.style.borderColor="green";
         game.score++;
+        game.played--;
         btn.style.display="block";
         inWord.disabled=true;
         btn.textContent="click for the next one";
@@ -115,7 +153,7 @@ function winChecker(){
 }
 
 function addScore(){
-    let tempOutput=`Score: <b>${game.score}</b> vs incorrect <i>(${game.incorrect})</i> <small>${game.wordsleft}</small> Words left`;
+    let tempOutput=`Score: <b>${game.score}</b> vs incorrect <i>(${game.incorrect})</i> <small>${game.played}</small> Words left`;
     scoreBoard.innerHTML=tempOutput;
 }
 
