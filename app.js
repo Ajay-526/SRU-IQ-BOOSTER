@@ -4,7 +4,7 @@ const output=document.createElement('div');
 const inWord=document.createElement('input');
 const scoreBoard=document.createElement('div');
 const reset=document.createElement('button');
-
+const Next=document.createElement('button');
 
 const url='https://docs.google.com/spreadsheets/d/';
 const ssid='1S8gVKhwwZKo12T8LCpkQJaS32-zeO5TUHDBzsyktFRE';
@@ -13,7 +13,9 @@ const q2='tqx=out:json';
 let url1=`${url}${ssid}${q1}&${q2}`;
 const myWords=[];//min two character
 
+Next.textContent='Next Word';
 
+Next.classList.add('btn-warning');
 
 ///game start variables
 const game={sel:'',scramble:'',score:0,incorrect:0,wordsleft:0,played:30};
@@ -22,6 +24,7 @@ reset.textContent="RESET";
 reset.classList.add('btn-secondary');
 reset.style.marginTop='18px';
 
+Next.style.display='none';
 
 reset.addEventListener('click',(e)=>{
     location.reload();
@@ -39,7 +42,7 @@ scoreBoard.style.background="black";
 scoreBoard.style.padding="10px";
 scoreBoard.style.fontSize="2em";
 inWord.setAttribute('type','text');
-output.textContent="Your Game is Loading.......";
+output.textContent="Your Game Will be Loaded after selecting the Level.......";
 output.style.textAlign='center';
 output.style.fontSize='1.2em';
 inWord.classList.add('myInput');
@@ -49,9 +52,12 @@ btn.classList.add('btn','btn-primary');
 gameArea.append(output);
 gameArea.append(inWord);
 gameArea.prepend(scoreBoard);
-//gameArea.append(choose);
 gameArea.append(btn);
+gameArea.append(Next);
 gameArea.append(reset);
+
+
+
 
 function bring(selectedValue,selectBox)
 {
@@ -89,6 +95,22 @@ reset.style.display='none';
 
 ///event listerners
 btn.addEventListener('click',(e)=>{
+    
+    var timeleft = 60;
+
+    var downloadTimer = setInterval(function function1(){
+    document.getElementById('timer').innerHTML= timeleft +" "+"seconds remaining";
+
+    timeleft -= 1;
+    if(timeleft <= 0){
+        clearInterval(downloadTimer);
+        document.getElementById('timer').innerHTML="Time is up!";
+        alert("Time Up!")
+        location.reload();
+    }
+    }, 1000);
+    
+    
     reset.style.display='block';
     if(game.played<=0){
         scoreBoard.textContent='';
@@ -111,6 +133,20 @@ btn.addEventListener('click',(e)=>{
     inWord.style.display='inline';
     inWord.focus();
     btn.style.display='none';
+    // myWords.sort(()=>{return 0.7 - Math.random()});//randomizing the array
+    // game.sel=myWords.shift();
+    // game.wordsleft = myWords.length;
+    // addScore();
+    // game.scramble=sorter(game.sel);
+    sorting();
+    // output.style.fontSize='3em';
+    // output.style.letterSpacing='0.5em';
+    // inWord.setAttribute('maxlength',game.sel.length);
+    // output.textContent=`${game.scramble}`;
+})
+
+function sorting()
+{
     myWords.sort(()=>{return 0.7 - Math.random()});//randomizing the array
     game.sel=myWords.shift();
     game.wordsleft = myWords.length;
@@ -120,7 +156,8 @@ btn.addEventListener('click',(e)=>{
     output.style.letterSpacing='0.5em';
     inWord.setAttribute('maxlength',game.sel.length);
     output.textContent=`${game.scramble}`;
-})
+}
+
 
 inWord.addEventListener('keyup',(e)=>{
     inWord.style.borderColor="#eee";
@@ -135,15 +172,18 @@ function winChecker(){
     inWord.style.borderWidth='5px'
     if(inWord.value == game.sel)
     {
+        Next.style.display='none';
         inWord.style.borderColor="green";
         game.score++;
         game.played--;
         btn.style.display="block";
         inWord.disabled=true;
         btn.textContent="click for the next one";
+        btn.style.marginTop='8px';
     }
     else
     {
+        Next.style.display='block';
         inWord.style.borderColor='red';
         inWord.value='';
         inWord.focus();
@@ -151,6 +191,11 @@ function winChecker(){
     }
     addScore();
 }
+
+Next.addEventListener('click',(e)=>{
+    sorting();
+})
+
 
 function addScore(){
     let tempOutput=`Score: <b>${game.score}</b> vs incorrect <i>(${game.incorrect})</i> <small>${game.played}</small> Words left`;

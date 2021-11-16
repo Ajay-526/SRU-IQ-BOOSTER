@@ -92,16 +92,34 @@ button{
     font-size: 1.2em;
 }
 .choose{
-    background-color: darkgrey;
+    background-color: #FFC837;
     font-size: 1.2em;
     padding: 5px;
-    color: white;
+    color: black;
     margin: auto;
     margin-bottom: 5px;
-    text-align: center;
 }
 .btn-secondary{
     background-color: red;
     color: white;
     margin-top: 20px;
+}
+#timer{
+    margin: auto;
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 2em;
+    background-color: chartreuse;
+    color: white;
+}
+ol{
+    border: blanchedalmond 5px solid;
+}
+li{
+    margin: 18px;
+    font-size: 1em;
+}
+.alert-success{
+    background-color: #642B73;
+    color: white;
 }
