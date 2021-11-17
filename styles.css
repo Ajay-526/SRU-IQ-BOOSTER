@@ -2,6 +2,7 @@ body{
     margin-left: 5px;
     margin-right: 5px;
     margin-bottom: 10%;
+    
 }
 .menu{
     display: flex;
@@ -110,7 +111,10 @@ button{
     text-align: center;
     font-size: 2em;
     background-color: chartreuse;
-    color: white;
+    color: black;
+    width: fit-content;
+    padding: 10px;
+    border-radius: 10px;
 }
 ol{
     border: blanchedalmond 5px solid;
@@ -123,3 +127,22 @@ li{
     background-color: #642B73;
     color: white;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

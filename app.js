@@ -6,6 +6,12 @@ const scoreBoard=document.createElement('div');
 const reset=document.createElement('button');
 const Next=document.createElement('button');
 
+const reload=document.createElement('button');
+
+const NextBtn=document.createElement('button');
+NextBtn.classList.add('btn-primary');
+
+
 const url='https://docs.google.com/spreadsheets/d/';
 const ssid='1S8gVKhwwZKo12T8LCpkQJaS32-zeO5TUHDBzsyktFRE';
 const q1='/gviz/tq?';
@@ -20,7 +26,7 @@ Next.classList.add('btn-warning');
 ///game start variables
 const game={sel:'',scramble:'',score:0,incorrect:0,wordsleft:0,played:30};
 
-reset.textContent="RESET";
+reset.textContent="Restart the GAME";
 reset.classList.add('btn-secondary');
 reset.style.marginTop='18px';
 
@@ -53,10 +59,13 @@ gameArea.append(output);
 gameArea.append(inWord);
 gameArea.prepend(scoreBoard);
 gameArea.append(btn);
+gameArea.append(NextBtn);
 gameArea.append(Next);
 gameArea.append(reset);
 
 
+NextBtn.textContent='Click for the next word';
+NextBtn.style.display='none';
 
 
 function bring(selectedValue,selectBox)
@@ -95,22 +104,7 @@ reset.style.display='none';
 
 ///event listerners
 btn.addEventListener('click',(e)=>{
-    
-    var timeleft = 60;
-
-    var downloadTimer = setInterval(function function1(){
-    document.getElementById('timer').innerHTML= timeleft +" "+"seconds remaining";
-
-    timeleft -= 1;
-    if(timeleft <= 0){
-        clearInterval(downloadTimer);
-        document.getElementById('timer').innerHTML="Time is up!";
-        alert("Time Up!")
-        location.reload();
-    }
-    }, 1000);
-    
-    
+    Timing();
     reset.style.display='block';
     if(game.played<=0){
         scoreBoard.textContent='';
@@ -144,7 +138,31 @@ btn.addEventListener('click',(e)=>{
     // inWord.setAttribute('maxlength',game.sel.length);
     // output.textContent=`${game.scramble}`;
 })
+function Timing()
+{
+    var timeleft = 80;
 
+    var downloadTimer = setInterval(function function1(){
+    document.getElementById('timer').innerHTML= timeleft +" "+"seconds remaining";
+
+    timeleft -= 1;
+    if(timeleft<=10)
+    {
+        document.getElementById('timer').style.backgroundColor='red';
+    }
+    if(timeleft <= 0){
+            clearInterval(downloadTimer);
+            document.getElementById('timer').innerHTML="Time is up!";            
+            //alert(tempOutput);
+            addScore();
+            output.style.display='none';
+            inWord.style.display='none';
+            Next.style.display='none';
+            reset.style.display='block';
+            //location.reload();
+        }
+    }, 1000);
+}
 function sorting()
 {
     myWords.sort(()=>{return 0.7 - Math.random()});//randomizing the array
@@ -176,10 +194,10 @@ function winChecker(){
         inWord.style.borderColor="green";
         game.score++;
         game.played--;
-        btn.style.display="block";
+        //btn.style.display="block";
         inWord.disabled=true;
-        btn.textContent="click for the next one";
-        btn.style.marginTop='8px';
+        NextBtn.style.display='block';
+        NextBtn.style.marginTop='8px';
     }
     else
     {
@@ -192,14 +210,30 @@ function winChecker(){
     addScore();
 }
 
-Next.addEventListener('click',(e)=>{
+NextBtn.addEventListener('click',(e)=>{
+    inWord.disabled=false;
+    inWord.style.borderColor="#eee";
+    inWord.style.borderWidth='1px';
+    inWord.value='';
+    inWord.focus();
     sorting();
+    NextBtn.style.display='none';
+})
+
+
+Next.addEventListener('click',(e)=>{
+    inWord.focus();
+    inWord.style.borderColor="#eee";
+    inWord.style.borderWidth='1px'; 
+    sorting();
+    Next.style.display='none';
 })
 
 
 function addScore(){
     let tempOutput=`Score: <b>${game.score}</b> vs incorrect <i>(${game.incorrect})</i> <small>${game.played}</small> Words left`;
     scoreBoard.innerHTML=tempOutput;
+    let d=tempOutput;
 }
 
 
