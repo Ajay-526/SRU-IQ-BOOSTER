@@ -63,7 +63,8 @@ gameArea.append(NextBtn);
 gameArea.append(Next);
 gameArea.append(reset);
 
-
+let details=document.getElementById('details');
+details.style.display='none';
 NextBtn.textContent='Click for the next word';
 NextBtn.style.display='none';
 
@@ -101,38 +102,44 @@ btn.style.display='none';
 reset.style.display='none';
 
 
-
 ///event listerners
 btn.addEventListener('click',(e)=>{
-    Timing();
-    reset.style.display='block';
-    if(game.played<=0){
-        scoreBoard.textContent='';
-        btn.textContent="";
-        gameArea.style.background="green";
-        gameArea.style.color="white";
-        gameArea.style.fontSize="2.5em";
-        gameArea.innerHTML=`<div>GAME OVER</div><br>`;
-        gameArea.textContent+=` You got ${game.score} correct vs ${game.incorrect} incorrect`;
-        
-    }else{
-    }
-    inWord.disabled=false;
-    inWord.value="";
-    inWord.style.borderWidth='1px';
-    inWord.style.borderColor="#eee";
-    inWord.style.letterSpacing="0.5em";
-    scoreBoard.style.display='block';
-    scoreBoard.textContent="Score : 0";
-    inWord.style.display='inline';
-    inWord.focus();
+    details.style.display='block';
+    inWord.style.display='none';
     btn.style.display='none';
+    output.textContent="Fill your details to start the GAME";
+    document.getElementById('submit').addEventListener('click',(e)=>{
+        Timing();
+        reset.style.display='block';
+        if(game.played<=0){
+            scoreBoard.textContent='';
+            btn.textContent="";
+            gameArea.style.background="green";
+            gameArea.style.color="white";
+            gameArea.style.fontSize="2.5em";
+            gameArea.innerHTML=`<div>GAME OVER</div><br>`;
+            gameArea.textContent+=` You got ${game.score} correct vs ${game.incorrect} incorrect`;
+            
+        }else{
+        }
+        inWord.disabled=false;
+        inWord.value="";
+        inWord.style.borderWidth='1px';
+        inWord.style.borderColor="#eee";
+        inWord.style.letterSpacing="0.5em";
+        scoreBoard.style.display='block';
+        scoreBoard.textContent="Score : 0";
+        inWord.style.display='inline';
+        inWord.focus();
+        details.style.display='none';
+        sorting();
+    })
     // myWords.sort(()=>{return 0.7 - Math.random()});//randomizing the array
     // game.sel=myWords.shift();
     // game.wordsleft = myWords.length;
     // addScore();
     // game.scramble=sorter(game.sel);
-    sorting();
+    
     // output.style.fontSize='3em';
     // output.style.letterSpacing='0.5em';
     // inWord.setAttribute('maxlength',game.sel.length);

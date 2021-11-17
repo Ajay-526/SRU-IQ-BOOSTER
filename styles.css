@@ -127,7 +127,15 @@ li{
     background-color: #642B73;
     color: white;
 }
-
+#details{
+    margin: auto;
+    margin: 10px;
+    text-align: center;
+    font-size: 1.3em;
+}
+input{
+    margin: 5px;
+}
 
 
 
