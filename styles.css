@@ -104,6 +104,7 @@ button{
     background-color: red;
     color: white;
     margin-top: 20px;
+    font-size: 1.3em;
 }
 #timer{
     margin: auto;
@@ -137,20 +138,6 @@ input{
     margin: 5px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+btn-primary{
+    font-size: 1.3em;
+}

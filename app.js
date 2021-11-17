@@ -10,7 +10,7 @@ const reload=document.createElement('button');
 
 const NextBtn=document.createElement('button');
 NextBtn.classList.add('btn-primary');
-
+NextBtn.style.fontSize='1.3em';
 
 const url='https://docs.google.com/spreadsheets/d/';
 const ssid='1S8gVKhwwZKo12T8LCpkQJaS32-zeO5TUHDBzsyktFRE';
@@ -22,6 +22,8 @@ const myWords=[];//min two character
 Next.textContent='Next Word';
 
 Next.classList.add('btn-warning');
+Next.style.fontSize='1.3em';
+Next.style.marginTop='5px';
 
 ///game start variables
 const game={sel:'',scramble:'',score:0,incorrect:0,wordsleft:0,played:30};
