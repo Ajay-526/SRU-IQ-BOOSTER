@@ -111,30 +111,37 @@ btn.addEventListener('click',(e)=>{
     btn.style.display='none';
     output.textContent="Fill your details to start the GAME";
     document.getElementById('submit').addEventListener('click',(e)=>{
-        Timing();
-        reset.style.display='block';
-        if(game.played<=0){
-            scoreBoard.textContent='';
-            btn.textContent="";
-            gameArea.style.background="green";
-            gameArea.style.color="white";
-            gameArea.style.fontSize="2.5em";
-            gameArea.innerHTML=`<div>GAME OVER</div><br>`;
-            gameArea.textContent+=` You got ${game.score} correct vs ${game.incorrect} incorrect`;
-            
-        }else{
+        if(document.getElementById('name').value==''||document.getElementById('email').value==''||document.getElementById('limit').value=='')
+        {
+            alert('Please fill the credentials');
+            location.reload();
         }
-        inWord.disabled=false;
-        inWord.value="";
-        inWord.style.borderWidth='1px';
-        inWord.style.borderColor="#eee";
-        inWord.style.letterSpacing="0.5em";
-        scoreBoard.style.display='block';
-        scoreBoard.textContent="Score : 0";
-        inWord.style.display='inline';
-        inWord.focus();
-        details.style.display='none';
-        sorting();
+        else
+        {
+            Timing();
+            reset.style.display='block';
+            if(game.played<=0){
+                scoreBoard.textContent='';
+                btn.textContent="";
+                gameArea.style.background="green";
+                gameArea.style.color="white";
+                gameArea.style.fontSize="2.5em";
+                gameArea.innerHTML=`<div>GAME OVER</div><br>`;
+                gameArea.textContent+=` You got ${game.score} correct vs ${game.incorrect} incorrect`;
+                
+            }
+            inWord.disabled=false;
+            inWord.value="";
+            inWord.style.borderWidth='1px';
+            inWord.style.borderColor="#eee";
+            inWord.style.letterSpacing="0.5em";
+            scoreBoard.style.display='block';
+            scoreBoard.textContent="Score : 0";
+            inWord.style.display='inline';
+            inWord.focus();
+            details.style.display='none';
+            sorting();
+        }
     })
     // myWords.sort(()=>{return 0.7 - Math.random()});//randomizing the array
     // game.sel=myWords.shift();
@@ -149,7 +156,7 @@ btn.addEventListener('click',(e)=>{
 })
 function Timing()
 {
-    var timeleft = 80;
+    var timeleft = Number(document.getElementById('limit').value);
 
     var downloadTimer = setInterval(function function1(){
     document.getElementById('timer').innerHTML= timeleft +" "+"seconds remaining";
@@ -168,6 +175,7 @@ function Timing()
             inWord.style.display='none';
             Next.style.display='none';
             reset.style.display='block';
+            start();
             //location.reload();
         }
     }, 1000);
@@ -255,4 +263,20 @@ function sorter(val){
         return sorter(val)
     }
     return temp;
+}
+
+function start()
+{
+    $.ajax({
+        url:'https://api.apispreadsheets.com/data/20658/',
+        headers: {"accessKey": "YOUR_ACCESS_KEY", "secretKey": "YOUR_ACCESS_KEY"},
+        type:'post',
+        data:{name: $("#name").val(), email: $("#email").val(), age: $("#age").val(), score: `${game.score}`, incorrect: `${game.incorrect}`, TimeTaken: $("#limit").val()},
+        success: function(){
+          alert("Form Data Submitted :)")
+        },
+        error: function(){
+          alert("There was an error :(")
+        }
+    });
 }
