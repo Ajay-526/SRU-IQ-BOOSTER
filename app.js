@@ -265,18 +265,26 @@ function sorter(val){
     return temp;
 }
 
+const dashboard=document.createElement('button');
+dashboard.textContent='see dashboard';
+dashboard.classList.add('btn-primary');
+dashboard.style.display='none';
+gameArea.append(dashboard);
 function start()
 {
     $.ajax({
-        url:'https://api.apispreadsheets.com/data/20658/',
+        url:'https://api.apispreadsheets.com/data/20668/',
         headers: {"accessKey": "YOUR_ACCESS_KEY", "secretKey": "YOUR_ACCESS_KEY"},
         type:'post',
-        data:{name: $("#name").val(), email: $("#email").val(), age: $("#age").val(), score: `${game.score}`, incorrect: `${game.incorrect}`, TimeTaken: $("#limit").val()},
+        data:{name: $("#name").val(), score: Number(`${game.score}`), incorrect: Number(`${game.incorrect}`), TimeTaken: $("#limit").val()},
         success: function(){
-          alert("Form Data Submitted :)")
+          dashboard.style.display='block';
         },
         error: function(){
           alert("There was an error :(")
         }
     });
 }
+dashboard.addEventListener('click',(e)=>{
+    window.location.href='dashboard.html';
+})
